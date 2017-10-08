@@ -1,0 +1,25 @@
+<table class="table" style="z-index: 100">
+  <thead>
+  <tr>
+    <th>Bazar name</th>
+    <th>Datum</th>
+    <th>Listnummer von</th>
+    <th>Listnummer bis</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr
+
+    style="cursor: pointer"
+    *ngFor="let bazaar of bazaars"
+    (click)="onSelectItem(bazaar)"
+
+  >
+    <td>{{bazaar.name}}</td>
+    <td>{{bazaar.bazaardate}}</td>
+    <td>{{bazaar.listnumber_start}}</td>
+    <td>{{bazaar.listnumber_end}}</td>
+  </tr>
+  </tbody>
+</table>
+

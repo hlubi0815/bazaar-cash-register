@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="">
+    <form [formGroup]="providerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="listnumber">Listennummer</label>
+        <input
+          type="text"
+          id="listnumber"
+          class="form-control"
+          formControlName="listnumber"
+          [onReturn]
+        >
+      </div>
+      <div class="form-group">
+        <label for="lastname">Nachname</label>
+        <input
+          type="text"
+          id="lastname"
+          class="form-control"
+          formControlName="lastname"
+          [onReturn]
+        >
+      </div>
+      <div class="form-group">
+        <label for="firstname">Vorname</label>
+        <input
+          type="text"
+          id="firstname"
+          class="form-control"
+          formControlName="firstname"
+          [focus]="focusNewEntry"
+          [onReturn]
+        >
+      </div>
+      <div class="form-group">
+        <label for="phonenumber">Telefonnummer</label>
+        <input
+          type="text"
+          id="phonenumber"
+          class="form-control"
+          formControlName="phonenumber"
+          [onReturn]
+        >
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          [onReturn]
+        >
+      </div>
+      <div class="form-group">
+        <label for="supporter">Helfer</label>
+        <input
+          type="checkbox"
+          id="supporter"
+          class="form-control"
+          formControlName="supporter"
+        >
+      </div>
+      <div class="">
+        <show-errors [control]="providerForm.controls.listnumber"></show-errors>
+      </div>
+
+      <div class="">
+        <button type="submit" class="btn btn-success">Speichern</button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDelete()"
+          *ngIf="isEdit">Löschen
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

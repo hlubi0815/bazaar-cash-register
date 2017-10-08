@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>Listennummer</th>
+    <th>Nachname</th>
+    <th>Vorname</th>
+    <th>Telefonnummer</th>
+    <th>Email</th>
+    <th>Helfer</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr
+
+    style="cursor: pointer"
+    *ngFor="let provider of providers"
+    (click)="onSelectItem(provider)"
+
+  >
+    <td>{{provider.listnumber}}</td>
+    <td>{{provider.lastname}}</td>
+    <td>{{provider.firstname}}</td>
+    <td>{{provider.phonenumber}}</td>
+    <td>{{provider.email}}</td>
+    <td><span *ngIf="provider.supporter" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+  </tr>
+  </tbody>
+</table>
+

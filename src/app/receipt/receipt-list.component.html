@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>Listennummer</th>
+    <th>Teile nummer</th>
+    <th>Preis</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr
+
+    style="cursor: pointer"
+    *ngFor="let receiptItem of receiptItems"
+    (click)="onSelectItem(receiptItem)"
+
+  >
+    <td>{{receiptItem.listnumber}}</td>
+    <td>{{receiptItem.itemnumber}}</td>
+    <td>{{receiptItem.amount | currency:'EUR':true}}</td>
+  </tr>
+  </tbody>
+</table>

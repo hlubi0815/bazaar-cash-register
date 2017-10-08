@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Beleg id</th>
+        <th>Erzeugt am</th>
+        <th>Summe</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+
+        style="cursor: pointer"
+        *ngFor="let receipt of receipts"
+        (click)="onSelectItem(receipt)"
+
+      >
+        <td>{{receipt.receiptId}}</td>
+        <td>{{receipt.createdat}}</td>
+        <td>{{receipt.sum | currency:'EUR':true}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <hr>
+  <div class="">
+    <app-receipt-list>
+    </app-receipt-list>
+  </div>
+</div>
+
