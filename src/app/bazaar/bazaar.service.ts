@@ -26,7 +26,7 @@ export class BazaarService {
         console.log("VALUE RECEIVED: ", res.records);
 
         for (const entr of res.records) {
-          const bazaar: Bazaar = new Bazaar(entr.bazaarid, entr.name, entr.bazaardate, entr.listnumber_start, entr.listnumber_end);
+          const bazaar: Bazaar = new Bazaar(entr.bazaarid, entr.name, entr.bazaardate, entr.listnumber_start, entr.listnumber_end, entr.change, entr.fee, entr.percentageoff, entr.earningscake);
           bazaars.push(bazaar);
         }
 
@@ -43,6 +43,16 @@ export class BazaarService {
     this.bazaars = bazaars;
     return bazaars;
 
+  }
+
+
+  getSales() {
+    const body = {"bazaarid": "1"};
+
+    return this.http.post(this.baseUrl + 'bazaar/sales.php', body, {headers: this.getHeaders(),})
+      .map(
+        (res: Response) => res.json()
+      );
   }
 
   private getHeaders() {

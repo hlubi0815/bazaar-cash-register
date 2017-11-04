@@ -28,6 +28,10 @@ import {BazaarListComponent} from './bazaar/bazaar-list.component';
 import {BazaarService} from "./bazaar/bazaar.service";
 import {APP_BASE_HREF} from "@angular/common";
 import {environment} from '../environments/environment';
+import {ChartsModule} from "ng2-charts";
+import {ProviderSettlementComponent} from './provider-settlement/provider-settlement.component';
+import {ProviderSettlementService} from "./provider-settlement/provider-settlement.service";
+import {ProviderSettlementOverviewComponent} from './provider-settlement-overview/provider-settlement-overview.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +50,8 @@ import {environment} from '../environments/environment';
     ShowErrorsComponent,
     BazaarComponent,
     BazaarListComponent,
+    ProviderSettlementComponent,
+    ProviderSettlementOverviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,9 +61,10 @@ import {environment} from '../environments/environment';
     ModalModule.forRoot(),
     BootstrapModalModule,
     routing,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    ChartsModule
   ],
-  providers: [ReceiptService, DataService, ProviderService, BazaarService, {
+  providers: [ReceiptService, DataService, ProviderService, BazaarService, ProviderSettlementService, {
     provide: LOCALE_ID,
     useValue: "de-DE"
   }, {provide: APP_BASE_HREF, useValue: environment.baseHref}],

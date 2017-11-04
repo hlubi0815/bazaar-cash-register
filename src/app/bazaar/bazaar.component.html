@@ -1,6 +1,60 @@
 <div class="row">
-  <div class="col-xs-10">
+  <div class="col-md-12">
     <app-bazaar-list></app-bazaar-list>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-4">
+
+    <table class="table">
+      <tbody>
+      <tr
+        style="cursor: pointer">
+        <td>Anzahl vergebener Nummern</td>
+        <td>{{providerCount}}</td>
+      </tr>
+      <tr>
+        <td>Anzahl Helfer</td>
+        <td>{{providerSupportCount}}</td>
+      </tr>
+      <tr>
+        <td>Anzahl Nicht Helfer</td>
+        <td>{{proivderNonSupportCount}}</td>
+      </tr>
+      <tr>
+        <td> Gesamt Umsatz</td>
+        <td>{{total | currency:'EUR':true}}</td>
+      </tr>
+      <tr>
+        <td> Einnahmen Gebühr</td>
+        <td>{{earnings_fee | currency:'EUR':true}}</td>
+      </tr>
+      <tr>
+        <td>Einnahmen Prozentabzug von nicht Helfern</td>
+        <td>{{earningsNonSupporterPercentag | currency:'EUR':true}}</td>
+      </tr>
+      <tr>
+        <td>Einnahmen durch Kuchenverkauf</td>
+        <td>{{earningscake | currency:'EUR':true}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="col-md-8">
+    <div style="display: block">
+      <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)" *ngIf="dataReady"></canvas>
+    </div>
+
+
+  </div>
+</div>
+
+
 

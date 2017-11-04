@@ -5,6 +5,9 @@
     <th>Datum</th>
     <th>Listnummer von</th>
     <th>Listnummer bis</th>
+    <th>Wechselgeld</th>
+    <th>Geb&uuml;hr</th>
+    <th>Prozentabzug</th>
   </tr>
   </thead>
   <tbody>
@@ -19,6 +22,9 @@
     <td>{{bazaar.bazaardate}}</td>
     <td>{{bazaar.listnumber_start}}</td>
     <td>{{bazaar.listnumber_end}}</td>
+    <td>{{bazaar.change | currency:'EUR':true}}</td>
+    <td>{{bazaar.fee | currency:'EUR':true}}</td>
+    <td>{{bazaar.percentageoff}} %</td>
   </tr>
   </tbody>
 </table>

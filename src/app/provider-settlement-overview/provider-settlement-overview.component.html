@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="settlement" *ngFor="let settlement of settlements_columnA"
+         style="border:1px solid black;padding-left: 10px;padding-right: 10px;margin-bottom: 5px;">
+      <app-provider-settlement [settlement]="settlement" ment></app-provider-settlement>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="settlement" *ngFor="let settlement of settlements_columnB"
+         style="border:1px solid black;padding-left: 10px;padding-right: 10px;margin-bottom: 5px;">
+      <app-provider-settlement [settlement]="settlement" ment></app-provider-settlement>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="settlement" *ngFor="let settlement of settlements_columnC"
+         style="border:1px solid black;padding-left: 10px;padding-right: 10px;margin-bottom: 5px;">
+      <app-provider-settlement [settlement]="settlement" ment></app-provider-settlement>
+    </div>
+  </div>
+</div>

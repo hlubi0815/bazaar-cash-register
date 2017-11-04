@@ -1,0 +1,36 @@
+<h1>{{settlement.listnumber}} <span style="font-style: italic; font-size: large; "> {{settlement.firstname}} {{settlement.lastname}}</span>
+</h1>
+<h2 *ngIf="settlement.supporter" style="font-style: italic; font-size: large; color:red">Basar Helfer</h2>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Teile nummer</th>
+    <th>Preis</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr
+    style="cursor: pointer"
+    *ngFor="let item of settlement.items"
+  >
+    <td>{{item.itemnumber}}</td>
+    <td>{{item.amount | currency:'EUR':true}}</td>
+  </tr>
+  <tr>
+    <td colspan="1" style="text-align: right;">Total:</td>
+    <td>{{settlement.total | currency:'EUR':true}}</td>
+  </tr>
+  <tr *ngIf="!settlement.supporter">
+    <td colspan="1" style="color:red;text-align: right;">Basar Geb&uuml;hr - {{settlement.percentageoff}}%
+      ({{settlement.getPercentage()| currency:'EUR':true}})
+    </td>
+    <td>{{settlement.getPercentageOff()| currency:'EUR':true}}</td>
+  </tr>
+  <tr>
+    <td colspan="1" style="color:red;text-align: right;">Basarteilnahme: - {{settlement.fee | currency:'EUR':true}}</td>
+    <td style="font-size: medium; font-weight: bold">{{settlement.getGrantTotal() | currency:'EUR':true}}</td>
+  </tr>
+  </tbody>
+</table>
+
