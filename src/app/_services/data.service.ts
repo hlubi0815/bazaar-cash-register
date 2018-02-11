@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {ReceiptItem} from "./receipt-item.model";
-import {Receipt} from "./receipt.model";
+import {ReceiptItem} from "../_models/receipt-item.model";
+import {Receipt} from "../_models/receipt.model";
 
 @Injectable()
 export class DataService {

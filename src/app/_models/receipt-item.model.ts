@@ -6,6 +6,5 @@ export class ReceiptItem {
   public description: string;
 
   constructor(public listnumber: number, public amount: number) {
-    this.id = UUID.UUID();
   }
 }

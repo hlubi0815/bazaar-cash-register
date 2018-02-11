@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {Bazaar} from "./bazaar.model";
+import {Bazaar} from '../_models/bazaar.model';
 import {environment} from "../../environments/environment";
 
 
@@ -18,17 +18,14 @@ export class BazaarService {
 
   getAllProviders(): Bazaar[] {
     const bazaars: Bazaar[] = [];
-    this.http.get(this.baseUrl + 'bazaar/read.php', {headers: this.getHeaders(),})
+    this.http.get(this.baseUrl + 'bazaar', {headers: this.getHeaders(),})
       .map(
         (res: Response) => res.json()
       ).subscribe(
-      (res) => {
-        console.log("VALUE RECEIVED: ", res.records);
-
-        for (const entr of res.records) {
-          const bazaar: Bazaar = new Bazaar(entr.bazaarid, entr.name, entr.bazaardate, entr.listnumber_start, entr.listnumber_end, entr.change, entr.fee, entr.percentageoff, entr.earningscake);
+      (entr) => {
+          const bazaar: Bazaar = new Bazaar(entr.bazaarid, entr.itemName, entr.bazaardate, entr.listnumber_start,
+            entr.listnumber_end, entr.change, entr.fee, entr.percentageoff, entr.earningscake);
           bazaars.push(bazaar);
-        }
 
       },
       (x) => {

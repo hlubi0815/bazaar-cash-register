@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ProviderSettlementService} from "../provider-settlement/provider-settlement.service";
-import {ProviderSettlement} from "../provider-settlement/provider-settlement.model";
+import {ProviderSettlementService} from "../_services/provider-settlement.service";
+import {ProviderSettlement} from "../_models/provider-settlement.model";
 
 @Component({
   selector: 'app-provider-settlement-overview',
@@ -11,6 +11,7 @@ import {ProviderSettlement} from "../provider-settlement/provider-settlement.mod
     }
   `]
 })
+
 export class ProviderSettlementOverviewComponent implements OnInit {
 
   settlements_columnA: ProviderSettlement[] = [];
@@ -29,12 +30,12 @@ export class ProviderSettlementOverviewComponent implements OnInit {
         console.log("VALUE RECEIVED: ", res.records);
         const settlements: ProviderSettlement[] = [];
         let itemCount = 0;
-        for (const entr of res.records) {
+        for (const entr of res) {
           itemCount = itemCount + entr.items.length + 6;
           const settlement: ProviderSettlement = new ProviderSettlement(
-            entr.listnumber,
-            entr.firstname,
-            entr.lastname,
+            entr.pivot.sale_number,
+            entr.firstName,
+            entr.lastName,
             entr.supporter,
             entr.items_sold,
             entr.items,

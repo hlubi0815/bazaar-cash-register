@@ -1,22 +1,19 @@
-<nav class="navbar navbar-inverse ">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" (click)="toggleState()">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand">Basar Verwaltung</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse" [ngClass]="{'in': isIn} ">
-      <ul class="nav navbar-nav">
-        <li routerLinkActive="active"><a [routerLink]="['/bazaar']">Basare verwalten</a></li>
-        <li routerLinkActive="active"><a [routerLink]="['/provider']">Nummernvergabe</a></li>
-        <li routerLinkActive="active"><a [routerLink]="['/receipt']">Verkauf</a></li>
-        <li routerLinkActive="active"><a [routerLink]="['/receipt-overview']">Beleg Übersicht</a></li>
-        <li routerLinkActive="active"><a [routerLink]="['/provider-settlement-overview']">Abrechnung</a></li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div>
-</nav>
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Basar Verwaltung</a>
+        <button type="button" class="navbar-toggler d-lg-none" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleState()">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+      <div id="navbar" class="navbar-collapse" id="navbarsExampleDefault" [ngClass]="{'collapse': isIn} ">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" routerLinkActive="active"><a class="nav-link" [routerLink]="['/bazaar']" (click)="toggleState()">Basare verwalten</a></li>
+          <li class="nav-item" routerLinkActive="active"><a class="nav-link" [routerLink]="['/provider']" (click)="toggleState()">Nummernvergabe</a></li>
+          <li class="nav-item" routerLinkActive="active"><a class="nav-link" [routerLink]="['/receipt']" (click)="toggleState()">Verkauf</a></li>
+          <li class="nav-item" routerLinkActive="active"><a class="nav-link" [routerLink]="['/receipt-overview']" (click)="toggleState()">Beleg Übersicht</a></li>
+          <li class="nav-item" routerLinkActive="active"><a class="nav-link" [routerLink]="['/provider-settlement-overview']" (click)="toggleState()">Abrechnung</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+
+  </nav>
+</header>

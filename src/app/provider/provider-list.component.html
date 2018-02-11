@@ -7,6 +7,7 @@
     <th>Telefonnummer</th>
     <th>Email</th>
     <th>Helfer</th>
+    <th>Registrierung</th>
   </tr>
   </thead>
   <tbody>
@@ -22,7 +23,8 @@
     <td>{{provider.firstname}}</td>
     <td>{{provider.phonenumber}}</td>
     <td>{{provider.email}}</td>
-    <td><span *ngIf="provider.supporter" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+    <td><span *ngIf="provider.supporter" class="fa fa-check" aria-hidden="true"></span></td>
+    <td>{{provider.registration_channel}}</td>
   </tr>
   </tbody>
 </table>

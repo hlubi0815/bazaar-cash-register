@@ -1,10 +1,11 @@
 import {Component, EventEmitter, OnChanges, OnInit, Output} from '@angular/core';
-import {ReceiptItem} from "./receipt-item.model";
-import {ReceiptService} from "./receipt.service";
+import {ReceiptItem} from "../_models/receipt-item.model";
+import {ReceiptService} from "../_services/receipt.service";
 import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {DataService} from "./data.service";
-import {CustomValidators} from "../CustomValidators";
-import {ProviderService} from "../provider/provider.service";
+import {DataService} from "../_services/data.service";
+import {ProviderService} from "../_services/provider.service";
+import {ReceiptValidators} from "./ReceiptValidators";
+import {isUndefined} from "util";
 
 @Component({
   selector: 'app-receipt-add-item',
@@ -25,18 +26,26 @@ export class ReceiptAddItemComponent implements OnInit, OnChanges {
 
   onSubmit() {
     console.log("OnSubmit");
-    console.log("Edit: " + this.isEdit);
-    const newReceiptItem = new ReceiptItem(this.myForm.value.listnumber, this.myForm.value.itemAmount);
-    newReceiptItem.itemnumber = this.myForm.value.itemnumber;
-    if (this.isEdit) {
-      // Bearbeiten
-      this.rs.editItem(this.selectedReceiptItem, newReceiptItem);
-      this.isEdit = false;
+    if ( this.myForm.controls.listnumber.pristine === true) {
+      this.myForm.controls.listnumber.setErrors({'listnumber': {
+        'message': 'Die Listenummer existiert nicht !'
+      }});
     } else {
-      // Neu
-      this.rs.addItem(newReceiptItem);
+      console.log("Edit: " + this.isEdit);
+      const newReceiptItem = new ReceiptItem(this.myForm.value.listnumber, this.myForm.value.itemAmount);
+      newReceiptItem.itemnumber = this.myForm.value.itemnumber;
+
+      if (this.isEdit) {
+        // Bearbeiten
+        newReceiptItem.id = this.selectedReceiptItem.id;
+        this.rs.editItem(this.selectedReceiptItem, newReceiptItem);
+        this.isEdit = false;
+      } else {
+        // Neu
+        this.rs.addItem(newReceiptItem);
+      }
+      this.onClear();
     }
-    this.onClear();
   }
 
   onClear() {
@@ -63,7 +72,7 @@ export class ReceiptAddItemComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.myForm = new FormGroup({
-      'listnumber': new FormControl('', [Validators.required, CustomValidators.listnumber, this.listnumberExist.bind(this)]),
+      'listnumber': new FormControl(null, [ReceiptValidators.listnumber, this.listnumberExist.bind(this)]),
       'itemnumber': new FormControl(null),
       'itemAmount': new FormControl(null),
     });
@@ -81,6 +90,10 @@ export class ReceiptAddItemComponent implements OnInit, OnChanges {
   }
 
   listnumberExist(c: FormControl): ValidationErrors {
+    if (c.value === null) {
+      return null;
+    }
+
     const numValue = Number(c.value);
     const isValid = this.findInProviders(numValue);
     const message = {
@@ -93,7 +106,7 @@ export class ReceiptAddItemComponent implements OnInit, OnChanges {
 
   findInProviders(numValue: number) {
     for (let i = 0; i < this.ps.providers.length; i++) {
-      if (this.ps.providers[i].listnumber == numValue) {
+      if (this.ps.providers[i].listnumber === numValue) {
         return true;
       }
     }

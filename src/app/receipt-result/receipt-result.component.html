@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
     <h1>
-      {{total | currency:'EUR':true}}
+      {{total | currency:'EUR':'symbol'}}
     </h1>
     <button type="button" class="btn btn-success" (click)="onSettle()">Abrechnen</button>
     <button type="button" class="btn btn-danger" (click)="onDiscard()">Verwerfen</button>

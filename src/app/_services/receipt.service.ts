@@ -1,11 +1,12 @@
-import {Receipt} from './receipt.model';
+import {Receipt} from '../_models/receipt.model';
 import {EventEmitter, Injectable} from '@angular/core';
-import {ReceiptItem} from './receipt-item.model';
+import {ReceiptItem} from '../_models/receipt-item.model';
 import {Headers, Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {UUID} from 'angular2-uuid';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {environment} from '../../environments/environment';
+
 
 @Injectable()
 export class ReceiptService {
@@ -20,15 +21,15 @@ export class ReceiptService {
 
   createNewReceipt() {
     const uuid = UUID.UUID();
-    const body = {"id": uuid, "bazaarid": 1, "createdat": this.ISODateString(new Date())};
-    this.http.post(this.baseUrl + 'receipt/create.php', body, {headers: this.getHeaders(),})
+    const body = {};
+    this.http.post(this.baseUrl + 'receipt', body, {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       ).subscribe(
       (res) => {
         console.log("VALUE RECEIVED: ", res);
-        this.receipt = new Receipt(body.id, body.bazaarid);
-        this.receipt.createdat = body.createdat;
+        this.receipt = new Receipt(res.id, res.bazaar_id);
+        this.receipt.createdat = res.created_at;
         this.pushReceipt.emit(this.receipt);
       },
       (x) => {
@@ -58,19 +59,18 @@ export class ReceiptService {
   addItem(item: ReceiptItem) {
 
     const body = {
-      'id': item.id,
-      'receiptid': this.receipt.receiptId,
-      'listnumber': item.listnumber,
-      'itemnumber': item.itemnumber,
+      'sale_number': item.listnumber,
+      'item_number': item.itemnumber,
       'amount': item.amount
     };
     console.log(body);
-    this.http.post(this.baseUrl + 'receiptitem/create.php', body, {headers: this.getHeaders(),})
+    this.http.post(this.baseUrl + 'receipt/' + this.receipt.receiptId + '/item', body, {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       ).subscribe(
       (res) => {
         console.log("VALUE RECEIVED: ", res);
+        item.id = res.id;
         this.receipt.items.push(item);
         this.pushTotal();
       },
@@ -99,14 +99,14 @@ export class ReceiptService {
 
   deleteItem(item: ReceiptItem) {
 
-    const body = {"id": item.id};
-    this.http.post(this.baseUrl + 'receiptitem/delete.php', body, {headers: this.getHeaders(),})
+
+    this.http.delete(this.baseUrl + 'receipt/' + this.receipt.receiptId + '/item/' + item.id , {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       ).subscribe(
       (res) => {
-        console.log("VALUE RECEIVED: ", res);
         this.receipt.items.splice(this.receipt.items.indexOf(item), 1);
+        this.pushTotal();
       },
       (x) => {
         /* this function is executed when there's an ERROR */
@@ -117,7 +117,6 @@ export class ReceiptService {
         console.log("Completed");
       }
     );
-    this.pushTotal();
   }
 
   deleteAllItems() {
@@ -128,52 +127,22 @@ export class ReceiptService {
   }
 
   editItem(oldItem: ReceiptItem, newItem: ReceiptItem) {
-//    this.receipt.items[this.receipt.items.indexOf(oldItem)] = newItem;
 
     this.receipt.items.splice(this.receipt.items.indexOf(oldItem), 1, newItem);
 
-
-    const body = {"id": oldItem.id};
-    this.http.post(this.baseUrl + 'receiptitem/delete.php', body, {headers: this.getHeaders(),})
+    const body = {
+      "sale_number": newItem.listnumber,
+      "item_number": newItem.itemnumber,
+      "amount": newItem.amount
+    };
+    this.http.put(this.baseUrl + 'receipt/' + this.receipt.receiptId + '/item/' + oldItem.id,
+      body, {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       ).subscribe(
       (result) => {
-        console.log("EDIT DELETE OLD VALUE RECEIVED: ", result);
-        const newBody = {
-          "id": newItem.id,
-          "receiptid": this.receipt.receiptId,
-          "listnumber": newItem.listnumber,
-          "itemnumber": newItem.itemnumber,
-          "amount": newItem.amount
-        };
-        this.http.post(this.baseUrl + 'receiptitem/create.php', newBody, {headers: this.getHeaders(),})
-          .map(
-            (res: Response) => res.json()
-          ).subscribe(
-          (res) => {
-            console.log("EDIT CREATE NEW VALUE RECEIVED: ", res);
-          },
-          (x) => {
-            /* this function is executed when there's an ERROR */
-            console.log("ERROR: " + x);
-            this.modal.alert()
-              .size('lg')
-              .showClose(true)
-              .title('Achtung ')
-              .body(`
-            <h4>Artikel konnte nicht hinzugef&uuml;gt werden</h4>
-            <b>Ursachen:</b>
-            <ul>
-                <li>\` + x + \`</li>
-            </ul>`).open();
-
-          },
-          () => {
-            /* this function is executed when the observable ends (completes) its stream */
-            console.log("Completed");
-          }
-        );
+        console.log("STATUS UPDATE RECEIVED: ", result);
+        this.pushTotal();
       },
       (x) => {
         /* this function is executed when there's an ERROR */
@@ -185,23 +154,22 @@ export class ReceiptService {
       }
     );
 
-    this.pushTotal();
   }
 
 
   getAllReceipts(): Receipt[] {
     const receipts: Receipt[] = [];
-    this.http.get(this.baseUrl + 'receipt/read.php', {headers: this.getHeaders(),})
+    this.http.get(this.baseUrl + 'receipt', {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       ).subscribe(
       (res) => {
-        console.log("VALUE RECEIVED: ", res.records);
-        for (const entr of res.records) {
-          const receipt: Receipt = new Receipt(entr.receiptId, entr.bazaarId);
-          receipt.createdat = entr.createdat;
+        console.log("VALUE RECEIVED: ", res);
+        for (const entr of res) {
+          const receipt: Receipt = new Receipt(entr.id, entr.bazaar_id);
+          receipt.createdat = entr.created_at;
           receipt.sum = entr.sum;
-          receipts.push(entr);
+          receipts.push(receipt);
 
         }
 
@@ -220,17 +188,16 @@ export class ReceiptService {
 
   getAllItemsOfaReceipt(receiptId: string): ReceiptItem[] {
     const receiptItems: ReceiptItem[] = [];
-    this.http.get(this.baseUrl + 'receiptitem/read-items-of-receipt.php?id=' + receiptId, {headers: this.getHeaders(),})
+    this.http.get(this.baseUrl + 'receipt/' + receiptId + '/item', {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       ).subscribe(
       (res) => {
-        console.log("VALUE RECEIVED: ", res.records);
-        for (const entr of res.records) {
-          const receiptItem: ReceiptItem = new ReceiptItem(entr.listnumber, entr.amount);
+        console.log("VALUE RECEIVED: ", res);
+        for (const entr of res) {
+          const receiptItem: ReceiptItem = new ReceiptItem(entr.sale_number, entr.amount);
           receiptItem.id = entr.id;
-          receiptItems.push(entr);
-
+          receiptItems.push(receiptItem);
         }
 
       },
@@ -247,9 +214,9 @@ export class ReceiptService {
   }
 
   settleReceipt() {
-    const body = {"id": this.receipt.receiptId, "bazaarid": 1, "createdat": this.receipt.createdat, "settled": 1};
+    const body = {};
     console.log(body);
-    this.http.post(this.baseUrl + 'receipt/update.php', body, {headers: this.getHeaders(),})
+    this.http.post(this.baseUrl + 'receipt/' + this.receipt.receiptId + '/settle', body, {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       ).subscribe(

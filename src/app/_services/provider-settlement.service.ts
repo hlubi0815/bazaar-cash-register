@@ -3,7 +3,7 @@ import {Headers, Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {environment} from '../../environments/environment';
-import {ProviderSettlement} from "./provider-settlement.model";
+import {ProviderSettlement} from "../_models/provider-settlement.model";
 
 @Injectable()
 export class ProviderSettlementService {
@@ -18,9 +18,7 @@ export class ProviderSettlementService {
 
 
   getAllProviders() {
-    const body = {"bazaarid": "1"};
-
-    return this.http.post(this.baseUrl + 'provider/all.php', body, {headers: this.getHeaders(),})
+    return this.http.get(this.baseUrl + 'settlement', {headers: this.getHeaders(), })
       .map(
         (res: Response) => res.json()
       );

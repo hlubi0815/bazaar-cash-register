@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ReceiptItem} from './receipt-item.model';
-import {ReceiptService} from './receipt.service';
+import {ReceiptItem} from '../_models/receipt-item.model';
+import {ReceiptService} from '../_services/receipt.service';
 
 @Component({
   selector: 'app-receipt',

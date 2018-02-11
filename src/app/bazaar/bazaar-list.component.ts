@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Bazaar} from "./bazaar.model";
-import {BazaarService} from "./bazaar.service";
+import {Bazaar} from "../_models/bazaar.model";
+import {BazaarService} from "../_services/bazaar.service";
 
 @Component({
   selector: 'app-bazaar-list',

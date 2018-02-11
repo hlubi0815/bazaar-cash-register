@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnChanges, OnInit, Output} from '@angular/core';
-import {Provider} from "./provider.model";
+import {Provider} from "../_models/provider.model";
 
 import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {ProviderService} from "./provider.service";
+import {ProviderService} from "../_services/provider.service";
 import {CustomValidators} from "../CustomValidators";
 
 
@@ -29,7 +29,7 @@ export class ProviderAddComponent implements OnInit, OnChanges {
     console.log("Edit: " + this.isEdit);
     const newProvider = new Provider(this.providerForm.value.bazaarid, this.providerForm.value.listnumber,
       this.providerForm.value.firstname, this.providerForm.value.lastname, this.providerForm.value.phonenumber,
-      this.providerForm.value.email, this.providerForm.value.supporter);
+      this.providerForm.value.email, this.providerForm.value.supporter, 'per Telefon');
 
     if (this.isEdit) {
       // Bearbeiten

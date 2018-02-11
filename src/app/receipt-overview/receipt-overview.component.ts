@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ReceiptService} from "../receipt/receipt.service";
-import {Receipt} from "../receipt/receipt.model";
-import {DataService} from "../receipt/data.service";
+import {ReceiptService} from "../_services/receipt.service";
+import {Receipt} from "../_models/receipt.model";
+import {DataService} from "../_services/data.service";
 
 @Component({
   selector: 'app-receipt-overview',

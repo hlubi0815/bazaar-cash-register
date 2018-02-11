@@ -1,5 +1,6 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <div class=" form-group col-md-2">
+  <div class=" form-group row">
+    <div class="col-md-3">
     <label for="listnumber">Listennummer</label>
     <input
       type="text"
@@ -9,8 +10,9 @@
       [focus]="focusNewEntry"
       [onReturn]
     >
-  </div>
-  <div class=" form-group  col-md-2">
+
+    </div>
+    <div class="col-md-3">
     <label for="itemnumber">Teilenummer</label>
     <input
       type="text"
@@ -19,8 +21,8 @@
       formControlName="itemnumber"
       [onReturn]
     >
-  </div>
-  <div class=" form-group  col-md-2">
+    </div>
+    <div class="col-md-3">
     <label for="itemAmount">Preis</label>
     <input
       type="number"
@@ -28,10 +30,15 @@
       class="form-control"
       formControlName="itemAmount"
     >
+    </div>
   </div>
-  <div class="col-md-12">
-      <!--<button type="submit" class="btn btn-success" [disabled]="!myForm.valid">Speichern</button>-->
-      <button type="submit" class="btn btn-success">Speichern</button>
+  <div class="row">
+    <div class="col-sm-12">
+      <show-errors [control]="myForm.controls.listnumber"></show-errors>
+    </div>
+
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-success" >Speichern</button>
       <button
         type="button"
         class="btn btn-danger"
@@ -39,5 +46,6 @@
         *ngIf="isEdit">Löschen
       </button>
     </div>
+  </div>
 </form>
 

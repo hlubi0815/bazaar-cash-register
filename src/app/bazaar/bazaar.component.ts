@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BazaarService} from "./bazaar.service";
+import {BazaarService} from "../_services/bazaar.service";
 
 @Component({
   selector: 'app-bazaar',
@@ -34,7 +34,7 @@ export class BazaarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bs.getSales().subscribe(
+    /*this.bs.getSales().subscribe(
       (res) => {
         console.log("VALUE RECEIVED: ", res.earnings_fee);
         this.doughnutChartData[0] = res.earnings_fee;
@@ -50,15 +50,13 @@ export class BazaarComponent implements OnInit {
         this.dataReady = true;
       },
       (x) => {
-        /* this function is executed when there's an ERROR */
         console.log("ERROR: " + x);
       },
       () => {
-        /* this function is executed when the observable ends (completes) its stream */
         console.log("Completed");
       }
     );
-
+*/
 
   }
 

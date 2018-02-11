@@ -1,6 +1,7 @@
-<div class="row ">
+
     <form [formGroup]="providerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group col-md-2">
+      <div class="form-group row">
+      <div class=" col-sm-2">
         <label for="listnumber">Listennummer</label>
         <input
           type="text"
@@ -10,7 +11,18 @@
           [onReturn]
         >
       </div>
-      <div class="form-group col-md-2">
+        <div class="col-sm-2">
+          <label for="firstname">Vorname</label>
+          <input
+            type="text"
+            id="firstname"
+            class="form-control"
+            formControlName="firstname"
+            [focus]="focusNewEntry"
+            [onReturn]
+          >
+        </div>
+      <div class="col-sm-2">
         <label for="lastname">Nachname</label>
         <input
           type="text"
@@ -20,18 +32,7 @@
           [onReturn]
         >
       </div>
-      <div class="form-group col-md-2">
-        <label for="firstname">Vorname</label>
-        <input
-          type="text"
-          id="firstname"
-          class="form-control"
-          formControlName="firstname"
-          [focus]="focusNewEntry"
-          [onReturn]
-        >
-      </div>
-      <div class="form-group col-md-2">
+      <div class="col-sm-2">
         <label for="phonenumber">Telefonnummer</label>
         <input
           type="text"
@@ -41,7 +42,7 @@
           [onReturn]
         >
       </div>
-      <div class="form-group col-md-2">
+      <div class="col-sm-2">
         <label for="email">Email</label>
         <input
           type="text"
@@ -51,7 +52,7 @@
           [onReturn]
         >
       </div>
-      <div class="form-group col-md-2">
+      <div class="col-sm-1">
         <label for="supporter">Helfer</label>
         <input
           type="checkbox"
@@ -60,11 +61,13 @@
           formControlName="supporter"
         >
       </div>
-      <div class="col-md-12">
+      </div>
+        <div class="row">
+      <div class="col-sm-12">
         <show-errors [control]="providerForm.controls.listnumber"></show-errors>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-sm-3">
         <button type="submit" class="btn btn-success">Speichern</button>
         <button
           type="button"
@@ -73,5 +76,6 @@
           *ngIf="isEdit">Löschen
         </button>
       </div>
+      </div>
     </form>
-  </div>
+

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ProviderSettlement} from "./provider-settlement.model";
+import {ProviderSettlement} from "../_models/provider-settlement.model";
 
 @Component({
   selector: 'app-provider-settlement',
